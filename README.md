@@ -1,41 +1,26 @@
 # Terragrunt hierarchical variables example
 
-See https://terragrunt.gruntwork.io/docs/reference/config-blocks-and-attributes/
+In short, we demonstrate two workarounds for "Only one level of includes is allowed"
+
+a) Use locals block that loads multiple YAML files with variables
+b) Use multiple (labelled) include blocks, each loading a different parent file (but with no grandparenting)
 
 Note - all examples in HCL not HCL.JSON
 
 ## Run
 Edit environment.sh to either be dev or prod
+(default is dev)
 
 ```
 ./run.sh
 ```
 
-Expected output
-Terraform v1.1.5 on linux_amd64
-terragrunt version v0.35.18
-
-Initializing the backend...
-
-Initializing provider plugins...
-
-Terraform has been successfully initialized!
-
-You may now begin working with Terraform. Try running "terraform plan" to see
-any changes that are required for your infrastructure. All Terraform commands
-should now work.
-
-If you ever set or change modules or backend configuration for Terraform,
-rerun this command to reinitialize your working directory. If you forget, other
-commands will detect it and remind you to do so if necessary.
-
+### Expected output
+Environment is dev
+...
 Changes to Outputs:
-  + output1 = "myapp@dev-276.iam.gcloudservice.com"
+  + output1 = "myapp@dev1-1111.iam.gcloudservice.com"
+  + output2 = "myapp@dev2-2222.iam.gcloudservice.com"
+...
 
-You can apply this plan to save these new output values to the Terraform
-state, without changing any real infrastructure.
-
-─────────────────────────────────────────────────────────────────────────────
-
-Note: You didn't use the -out option to save this plan, so Terraform can't
-guarantee to take exactly these actions if you run "terraform apply" now.
+Where dev1 uses locals (with multiple files) and dev2 uses multiple include blocks
