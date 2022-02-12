@@ -1,2 +1,2 @@
-#export ENV=dev
-export ENV=prod
+export ENV=dev
+#export ENV=prod
