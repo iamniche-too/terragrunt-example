@@ -29,7 +29,7 @@
 
 include "env_vars" {
   path = find_in_parent_folders("env.hcl")
-  expose = truw
+  expose = true
 }
 
 include "app_vars" {
