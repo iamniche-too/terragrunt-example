@@ -29,7 +29,7 @@
 
 include "env_vars" {
   path = find_in_parent_folders("env.hcl")
-  expose = true
+  expose = truw
 }
 
 include "app_vars" {
@@ -50,6 +50,10 @@ locals {
   app_vars = yamldecode(
     file("${find_in_parent_folders("app.yaml")}")
   )
+
+  # example of using variables referenced in the labelled include blocks
+  # note - if expose = false then it will not work ...
+  environment_uuid = "${include.env_vars.inputs.environment}-${include.env_vars.inputs.project_uuid}"
 }
 
 # d) Reference yaml files using merge inputs i.e.
@@ -59,5 +63,6 @@ locals {
 
 inputs = {
   service_account_name = "${local.app_vars.app_name}@${local.env_vars.environment}-${local.env_vars.project_uuid}.iam.gcloudservice.com"
-  service_account_name2 = "${include.app_vars.inputs.app_name}@${include.env_vars.inputs.environment}-${include.env_vars.inputs.project_uuid}.iam.gcloudservice.com"
+  #service_account_name2 = "${include.app_vars.inputs.app_name}@${include.env_vars.inputs.environment}-${include.env_vars.inputs.project_uuid}.iam.gcloudservice.com"
+  service_account_name2 = "${include.app_vars.inputs.app_name}@${local.environment_uuid}.iam.gcloudservice.com"
 }
